@@ -38,10 +38,6 @@ spawn_path = NodePath("..")
 position = Vector2(193, 261)
 door = NodePath("../door")
 
-[node name="pressure_plate2" parent="." node_paths=PackedStringArray("door") instance=ExtResource("3_q3bjm")]
-position = Vector2(641, 331)
-door = NodePath("../door")
-
 [node name="door" parent="." instance=ExtResource("4_pg252")]
 position = Vector2(674, 204)
 
