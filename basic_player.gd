@@ -9,7 +9,7 @@ func _ready():
 	if is_multiplayer_authority():
 		camera.make_current()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if is_multiplayer_authority():
 		velocity = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down") * 400
 	move_and_slide()
