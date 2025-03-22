@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3yrk8a1b2bm3"]
+
+[ext_resource type="Texture2D" uid="uid://w62nl388cej3" path="res://icon.svg" id="1_uot4y"]
+
+[sub_resource type="GDScript" id="GDScript_uot4y"]
+script/source = "extends Area2D
+
+@export var door: Door
+@onready var collision_shape := door.get_node(\"CollisionShape2D\") as CollisionShape2D
+@onready var state:bool
+
+func _on_body_entered(body: Node2D) -> void:
+	_change_state()
+
+
+func _on_body_exited(body: Node2D) -> void:
+	_change_state()
+
+
+func _change_state() -> void:
+	state = !state
+	collision_shape.disabled = state
+	print(state)
+#
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uot4y"]
+radius = 16.1245
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8bqyo"]
+
+[node name="pressure_plate" type="Area2D"]
+script = SubResource("GDScript_uot4y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_uot4y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_uot4y")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8bqyo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

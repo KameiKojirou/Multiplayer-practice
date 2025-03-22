@@ -17,3 +17,24 @@ func _add_player(id = 1):
 func _on_join_pressed() -> void:
 	peer.create_client("localhost",9990)
 	multiplayer.multiplayer_peer = peer
+
+
+func _on_disconnect_pressed() -> void:
+	print("Disconnecting...")
+
+	# Optional: Remove your player node
+	var peer_id = multiplayer.get_unique_id()
+	if has_node(str(peer_id)):
+		get_node(str(peer_id)).queue_free()
+
+	# Disconnect from the server or stop hosting
+	if multiplayer.is_server():
+		multiplayer.multiplayer_peer.close()
+	else:
+		multiplayer.multiplayer_peer.disconnect_from_host()
+
+	# Reset the peer to null (fully disconnects)
+	multiplayer.multiplayer_peer = null
+
+	# Optional: Go back to a main menu scene
+	# get_tree().change_scene_to_file("res://main_menu.tscn")
